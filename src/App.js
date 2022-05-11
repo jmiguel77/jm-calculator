@@ -1,17 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import CalcButton from './CalcButton';
+import './App.css';
+import logo from './logo.svg';
 
 class App extends React.Component {
     state = {
         result: '',
-        checkNextDigit: false
+        checkNextDigit: false,
+        showError: false
     };
 
     isNumeric = (value) => {
         return !isNaN(value) && !isNaN(parseFloat(value));
     };
+
+    reset = () => {
+        this.setState({
+            result: '',
+            showError: false
+        })
+    }
 
     handleClick = (e) => {
         e.preventDefault();
@@ -22,17 +30,22 @@ class App extends React.Component {
             try {
                 result = eval(this.state.result);
             } catch (e) {
+                this.setState({
+                    showError: true
+                })
                 result = '';
-                alert('Invalid expression');
             }
             this.setState({
                 checkNextDigit: true
             })
         } else if ('C' === handlerValue) {
-            result = '';
+            this.reset();
         } else if ('<' === handlerValue) {
             result = result.substr(0, result.length - 1);
         } else {
+            if (this.state.showError) {
+                this.reset();
+            }
             if (this.state.checkNextDigit) {
                 if (this.isNumeric(handlerValue)) {
                     result = handlerValue;
@@ -55,10 +68,17 @@ class App extends React.Component {
         return (
             <div>
                 <div id="calculator-container" role="calculator-container" className="ui grid">
+                    <div className="eight wide column">
+                        <img id="logo" alt="Equal Experts" src={logo}/>
+                    </div>
+                    <div className="eight wide column">
+                        <h3 id="title">A simple calculator</h3>
+                    </div>
                     <div className="sixteen wide column">
                         <div id="result" className="ui input">
-                            <input type="text" value={this.state.result} readOnly={true}/>
+                            <input type="text" alt="operation result" value={this.state.result} readOnly={true}/>
                         </div>
+                        <p className={this.state.showError ? 'visible-error' : 'hidden-error'}>Incorrect expression</p>
                     </div>
                     <CalcButton text="C" handler={this.handleClick}/>
                     <CalcButton text="<" handler={this.handleClick}/>
