@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('render container for calculator', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const calculatorContainer = screen.getByRole(/calculator-container/i);
+  expect(calculatorContainer).toBeInTheDocument();
 });
