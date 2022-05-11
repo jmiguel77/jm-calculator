@@ -6,6 +6,18 @@ The version number for the instructions of this test is
 
      5b8d0fd276b6d288905ed2f63a934e057e8feca2
 
+## Setup instructions
+
+1. Use git to clone the repository
+      
+       git clone https://github.com/jmiguel77/jm-calculator.git
+2. Using a console, navigate into the project folder
+
+       cd {location-in-disk}/jm-calculator
+3. Install the project dependencies using npm
+ 
+       npm install 
+
 ## Available Scripts
 
 In the project directory, you can run:
