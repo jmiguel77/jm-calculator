@@ -2,6 +2,8 @@ import React from 'react';
 import CalcButton from './CalcButton';
 import './App.css';
 import logo from './logo.svg';
+import calculate from './calculator';
+import isValidFormula from './validator';
 
 class App extends React.Component {
     state = {
@@ -27,9 +29,9 @@ class App extends React.Component {
         let result = this.state.result;
 
         if ('=' === handlerValue) {
-            try {
-                result = eval(this.state.result);
-            } catch (e) {
+            if (isValidFormula(this.state.result)) {
+                result = calculate(this.state.result);
+            } else {
                 this.setState({
                     showError: true
                 })
